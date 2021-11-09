@@ -6,20 +6,38 @@ version:  0.0.1
 language: de
 narrator: Deutsch Female
 
-import: https://raw.githubusercontent.com/LiaTemplates/Rextester/master/README.md
-        https://github.com/liascript/CodeRunner
+import:   https://github.com/liascript/CodeRunner
 
 -->
 
+[![LiaScript](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://liascript.github.io/course/?https://raw.githubusercontent.com/SebastianZug/VL_SoftwareprojektRobotik/master/03_Templates.md#1)
+
 # Templates
 
-Eine interaktive Version des Kurses finden Sie unter [Link](https://liascript.github.io/course/?https://raw.githubusercontent.com/SebastianZug/SoftwareprojektRobotik/master/03_Templates.md#1)
+| Parameter            | Kursinformationen                                                                                                                                                                             |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Veranstaltung:**   | `Softwareprojekt Robotik`                                                                                                                                                                     |
+| **Semester**         | `Wintersemester 2021/22`                                                                                                                                                                      |
+| **Hochschule:**      | `Technische Universität Freiberg`                                                                                                                                                             |
+| **Inhalte:**         | `Template-Konzepte in C++`                                                                                                                                                |
+| **Link auf GitHub:** | [https://github.com/TUBAF-IfI-LiaScript/VL_Softwareentwicklung/blob/master/03_Templates.md](https://github.com/TUBAF-IfI-LiaScript/VL_SoftwareprojektRobotik/blob/master/03_Templates.md) |
+| **Autoren**          | @author                                                                                                                                                                                       |
+
+![](https://media.giphy.com/media/3xz2BMiUCvcqJlgfgQ/giphy.gif)
+
+--------------------------------------------------------------------------------
 
 **Zielstellung der heutigen Veranstaltung**
 
 + Einführung in die Konzepte der generischen Programmierung unter C++
 + Beschreibung der aktuellen Entwicklungen in C++17 und C++20
-+ Abgrenzung zu den unter C# bekannten Ansätzen (ł*Templates* vs. *Generics*)
++ Abgrenzung zu den unter C# bekannten Ansätzen (*Templates* vs. *Generics*)
+
+--------------------------------------------------------------------------------
+
+## Fragen aus der vergangenen Woche
+
+
 
 --------------------------------------------------------------------------------
 ## Kurze Erinnerung
@@ -58,43 +76,40 @@ des Typs, die Sicherstellt, dass in jedem Fall die angeforderte Vergleichsoperat
 ```csharp      GenericsIComparable.cs
 using System;
 
-namespace Rextester
+public class Student
 {
-  public class Student
-  {
-    public string name;
-    // ... and some other information
+  public string name;
+  // ... and some other information
 
-    public Student(string name){
-      this.name = name;
-    }
+  public Student(string name){
+    this.name = name;
+  }
+}
+
+public class Program{
+
+  static void SwapIfGreater<T>(ref T lhs, ref T rhs)
+                where T : System.IComparable<T>
+  {
+      T temp;
+      if (lhs.CompareTo(rhs) > 0)
+      {
+          temp = lhs;
+          lhs = rhs;
+          rhs = temp;
+      }
   }
 
-  public class Program{
-
-    static void SwapIfGreater<T>(ref T lhs, ref T rhs)
-                  where T : System.IComparable<T>
-    {
-        T temp;
-        if (lhs.CompareTo(rhs) > 0)
-        {
-            temp = lhs;
-            lhs = rhs;
-            rhs = temp;
-        }
-    }
-
-    public static void Main(string[] args)
-    {
-        int a = 5;
-        int b = 7;
-        SwapIfGreater<int>(ref a, ref b);
-        System.Console.WriteLine("a=" + a + ", b=" + b);
-    }
+  public static void Main(string[] args)
+  {
+      int a = 5;
+      int b = 7;
+      SwapIfGreater<int>(ref a, ref b);
+      System.Console.WriteLine("a=" + a + ", b=" + b);
   }
 }
 ```
-@Rextester.eval(@CSharp)
+@LIA.eval(`["main.cs"]`, `mono main.cs`, `mono main.exe`)
 
 > Templates ermöglichen die Realsierung eines typunabhängigen Verhaltens und damit die Konzentration von Implementierungsaufwand.
 
