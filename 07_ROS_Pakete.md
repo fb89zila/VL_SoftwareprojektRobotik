@@ -13,14 +13,19 @@ import: https://github.com/liascript/CodeRunner
 
 # ROS2 Pakete
 
-Eine interaktive Version des Kurses finden Sie unter [Link](https://liascript.github.io/course/?https://raw.githubusercontent.com/SebastianZug/SoftwareprojektRobotik/master/07_ROS_Pakete.md)
+[![LiaScript](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://liascript.github.io/course/?https://raw.githubusercontent.com/SebastianZug/VL_SoftwareprojektRobotik/master/07_ROS_Pakete.md#1)
 
-**Zielstellung der heutigen Veranstaltung**
 
-+ Aufbau von Paketen unter ROS2
-+ Vorgehen bei der Kompilierung
-+ Verwendung des Logging, von Bagfiles
-+ Launch Konzepte
+| Parameter            | Kursinformationen                                                                                                                                                                           |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Veranstaltung:**   | `Softwareprojekt Robotik`                                                                                                                                                                   |
+| **Semester**         | `Wintersemester 2021/22`                                                                                                                                                                    |
+| **Hochschule:**      | `Technische Universität Freiberg`                                                                                                                                                           |
+| **Inhalte:**         | `Umsetzung von ROS Paketen`                                                                                                                                                 |
+| **Link auf GitHub:** | [https://github.com/TUBAF-IfI-LiaScript/VL_Softwareentwicklung/blob/master/07_ROS_Pakete.md](https://github.com/TUBAF-IfI-LiaScript/VL_SoftwareprojektRobotik/blob/master/07_ROS_Pakete.md) |
+| **Autoren**          | @author                                                                                                                                                                                     |
+
+![](https://media.giphy.com/media/4VY76i2rbyg2ggLIGQ/giphy-downsized.gif)
 
 --------------------------------------------------------------------------------
 
@@ -137,7 +142,7 @@ Für ein ganzes Set von Paketen ist deutlich mehr Aufwand erforderlich:
 
 Wir wollen die Funktionalität der `minimal_subscriber`/`minimal_publisher` Beispiel erweitern und einen neuen Knoten implementieren, der den Zählwert nicht als Bestandteil eines strings kommuniziert sondern als separaten Zahlenwert.
 
-Sie finden den Beispielcode im Repository dieses Kurses unter [Link](https://github.com/SebastianZug/SoftwareprojektRobotik/tree/master/examples/07_ROS2Pakete/src)
+Sie finden den Beispielcode im Repository dieses Kurses unter [Link](https://github.com/TUBAF-IfI-LiaScript/VL_SoftwareprojektRobotik/tree/master/examples/07_ROS_Pakete/src)
 
 **Stufe 1: Individuelles Msg-Format**
 
@@ -161,7 +166,7 @@ creating folder ./my_msg_package/include/my_msg_package
 creating ./my_msg_package/CMakeLists.txt
 ```
 
-Nun ergänzen wir unsere eigentliche Beschreibungsdatei für die Definition der eigenen Nachricht. Dazu legen wir uns einen Ordner `src` an und integrieren wir eine Datei `MyMsg.msg`.
+Nun ergänzen wir unsere eigentliche Beschreibungsdatei für die Definition der eigenen Nachricht. Dazu legen wir uns einen Ordner `msg` an und integrieren wir eine Datei `MyMsg.msg`.
 
 ```
 int32 counter
@@ -214,7 +219,7 @@ das neu definierte Work-Package in die Liste der verfügbaren Pakete aufgenommen
 > source install/setup.bash
 > ros2 msg list | grep my
 my_msg_package/msg/MyMsg
-ros2 topic pub /tralla my_msg_package/msg/MyMsg "{counter: '8'}"
+> ros2 topic pub /tralla my_msg_package/msg/MyMsg "{counter: '8'}"
 ```
 
 ```
@@ -225,7 +230,7 @@ ros2 topic pub /tralla my_msg_package/msg/MyMsg "{counter: '8'}"
 **Schritt 2: Integration einer Methode**
 
 Nunmehr wollen wir die neu definierte Nachricht auch in einem Node verwenden.
-Entsprechend nutzen wir den `minimal_publisher` Beispiel aus der vergangenen Vorlesung und ersetzen die `String` Message gegen unsere `My_Msg` Implementierung. Dafür muss für den Knoten eine Abhängigkeit zum Paket "my_msg_package" spezifiziert werden. Dies kann während der Inititalisierung des Paketes oder im Anschluss anhand der 'package.xml' und 'CMakeList.txt' erfolgen. Schauen Sie sich noch mal die Definition der Abhängigkeiten in unserem `my_msg_package` an.
+Entsprechend nutzen wir den `minimal_publisher` Beispiel aus der vergangenen Vorlesung und ersetzen die `String` Message gegen unsere `My_Msg` Implementierung. Dafür muss für den Knoten eine Abhängigkeit zum Paket `my_msg_package` spezifiziert werden. Dies kann während der Inititalisierung des Paketes oder im Anschluss anhand der 'package.xml' und 'CMakeList.txt' erfolgen. Schauen Sie sich noch mal die Definition der Abhängigkeiten in unserem `my_msg_package` an.
 
 ```
 > ros2 pkg create my_tutorial_package --build-type ament_cmake --node-name data_generator --dependencies rclcpp std_msgs my_msg_package
@@ -295,7 +300,7 @@ digraph graphname {
 ```
 
 ```
-colcon graph --dot
+> colcon graph --dot
 digraph graphname {
   "my_tutorial_package";
   "my_msg_package";
@@ -365,7 +370,7 @@ https://index.ros.org/doc/ros2/Tutorials/Rosidl-Tutorial/
 ## Aufzeichnen des Prozesses
 
 Die Aufzeichnung von ganzen Datensätzen ist einer der zentralen Debug-Techniken
-unter ROS. Das Mitschneiden von ausgetauschten Nachrichten :
+unter ROS. Das Mitschneiden von ausgetauschten Nachrichten:
 
 + ermöglicht das automatisierte Testen von Algorithmen
 + stellt eine Vergleichbarkeit der Evaluationen sicher
@@ -375,8 +380,8 @@ Schauen wir uns das Ganze für einen Sensor an. Die Intel Realsense D435 eine
 RGB-D Kamera, mit einem ROS Interface. Der zugehörige Treiber findet sich unter folgendem [Link](https://github.com/intel/ros2_intel_realsense).
 
 ```
-ros2 run realsense_ros2_camera realsense_ros2_camera
-ros2 run image_tools showimage /image:=/camera/color/image_raw
+> ros2 run realsense_ros2_camera realsense_ros2_camera
+> ros2 run image_tools showimage /image:=/camera/color/image_raw
 ```
 
 `ros2 bag` ermöglicht die Aufzeichnung von allen Topics oder aber eine selektive
@@ -420,7 +425,7 @@ Welche Informationen vermuten Sie hinter den einzelnen Einträgen, die hier publ
 Mit `play` können Sie die Inhalte wieder abspielen.
 
 ```
-ros2 bag play rosbag2_2019_12_06-20_43_24.db3
+> ros2 bag play rosbag2_2019_12_06-20_43_24.db3
 ```
 
 Sehen Sie das Problem bei diesem Vorgehen, insbesondere im Zusammenhang mit RGB-D Daten?
@@ -428,12 +433,12 @@ Die Messages wurden für etwa 11 Sekunden aufgenommen und trotzdem ist eine Date
 Entsprechend ist es notwendig sich vor der Realisierung einer Aufzeichnung grundsätzlich Gedanken über die notwendigen Daten zu machen.
 Unter anderem sollten zwei Fehlkonfigurationen vermieden werden:
 
-+ Wenn zu wenige Daten aggregiert wurden, sinkt die Wiederverwendbarkeit des Datensatzes (vgl `camera_info` Daten für overlays).
++ Wenn zu wenige Daten aggregiert wurden, sinkt die Wiederverwendbarkeit des Datensatzes (vgl. `camera_info` Daten für overlays).
 + Wenn zu viele Daten aggregiert wurden, wird die Performanz des Systems möglicherweise überstrapaziert. Die Bandbreite der Schreiboperationen auf dem Speichermedium muss die Datenrate entsprechend abdecken.
 
 Ein Lösungsansatz ist die zeitliche Filterung der Informationen, in dem zum Beispiel nur jede 10te Nachricht gespeichert wird. Dies wiederum kann dann aber einen Einfluss auf das Verhalten des Algorithmus haben!
 
-An dieser Stelle wird sehr schon deutlich, wie der unter ROS1 erreichte
+An dieser Stelle wird schon deutlich, wie der unter ROS1 erreichte
 Komfort noch nicht unter ROS2 realisiert ist. Das `rosbag` Tool unter ROS1 erreicht
 ein weit größeres Spektrum an Konfigurierbarkeit.
 
@@ -452,15 +457,15 @@ auf Ihren Rechner. Es handelt sich dabei um ein ROS1-bagfile!
 2. Starten des Bagfiles unter `ros2` mittels eines Plugins für die Konvertierung
 
 ```
-> . start_melodic.sh
-> . start_dashing.sh
-ROS_DISTRO was set to 'melodic' before. Please make sure that the environment does not mix paths from different distributions.
+> source /opt/ros/noetic/setup.zsh
+> source /opt/ros/foxy/setup.zsh
+ROS_DISTRO was set to 'noetic' before. Please make sure that the environment does not mix paths from different distributions.
 > ros2 bag play -s rosbag_v2 b2-2016-04-05-14-44-52.bag
 ```
 
 ## Steuerung des Startprozesses
 
-Sie sehen, dass wir immer weitere Konsolen öffnen um einzelne Knoten zu starten
+Sie sehen, dass wir immer weitere Konsolen öffnen, um einzelne Knoten zu starten
 und zu parametrisieren. Dieses Vorgehen ist für die Arbeit mit Anwendungen, die
 mehr als 3 Knoten umfassen ungeeignet. Dabei definiert der Entwickler ein Set
 von Anwendungshorizonten für den Einsatz des `launch` Systems:
@@ -514,7 +519,7 @@ Dabei werden verschiedene Nachteile von ROS1-Launch beseitigt:
 + ROS1 kannte kein deterministisches Verhalten während der Startup-Prozesse ... *roslaunch does not guarantee any particular order to the startup of nodes -- although this is a frequently requested feature, it is not one that has any particular meaning in the ROS architecture as there is no way to tell when a node is initialized.*
 + "Dynamisierung" des Startup-Prozesses
 
-Hierfür war es notwendig die bisherige XML basierte Notation der Launch-Files aufzugeben und durch eine Skript-Sprache zu ersetzen. Dabei lag es nahe Python
+Hierfür war es notwendig die bisherige XML basierte Notation der Launch-Files aufzugeben und durch eine Skript-Sprache zu ersetzen. Dabei lag es nahe, Python
 als Grundlage zu verwenden. Zur Illustration einiger Features wurde das Paket
 `my_tutorial_package` um einen minimalistischen Subscriber für unseren individuellen Message-Typ erweitert.
 

@@ -662,14 +662,14 @@ Wichtig ist, dass Sie die verschiedenen `setup.x` Aufrufe korrekt ausführen.
 
 ```bash    ConsoleA
 # ROS1_Shell mit roscore
-> . /opt/ros/melodic/setup.bash
+> . /opt/ros/noetic/setup.bash
 > roscore
 ```
 
 ```bash    ConsoleB
 # ROS1_bridge
-> . /opt/ros/melodic/setup.bash
-> . /opt/ros/dashing/setup.bash
+> . /opt/ros/noetic/setup.bash
+> . /opt/ros/foxy/setup.bash
 > export ROS_MASTER_URI=http://localhost:11311
 > ros2 run ros1_bridge dynamic_bridge
 ```
@@ -678,7 +678,7 @@ Auf der ROS2 Seite nutzen wir nun das [image_tools](https://github.com/ros2/demo
 
 ```bash    ConsoleC
 # ROS2_Shell die ein Kamerasignal erfasst
-> . /opt/ros/dashing/setup.bash
+> . /opt/ros/foxy/setup.bash
 > ros2 run image_tools cam2image
 #ros2 run image_tools showimage   # zum testen
 ```
@@ -688,7 +688,7 @@ bisher nicht für ROS2 verfügbar.
 
 ```bash    ConsoleD
 # ROS1_Shell die ein Kamerasignal erfasst
-> . /opt/ros/melodic/setup.bash
+> . /opt/ros/noetic/setup.bash
 > rosrun opencv_apps face_detection image:=image
 ```
 
@@ -696,7 +696,7 @@ Nun können wir uns die Ausgabe auf der ROS1 Seite anschauen. Leider gibt es noc
 
 ```bash    ConsoleE
 # ROS1_Shell die die Ausgabe koordiniert
-. /opt/ros/melodic/setup.bash
+. /opt/ros/noetic/setup.bash
 > rostopic list
 /face_detection_1575145081472799322/face_image
 /face_detection_1575145081472799322/faces
